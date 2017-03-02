@@ -80,6 +80,9 @@ This is a sass example to reproduce the default icons. Notice: You don't need th
       @extend .fa-square-o;
     }
 
+## Development
+1. Create a link for w11k-select `npm link` in this directory
+2. Clone the [demo repository](http://to.do) and apply `npm link w11k-select`
 
 ## Roadmap
 
