@@ -1,17 +1,17 @@
 /** @internal */
-import {ng as angular} from './lib/angular';
-import {setSelected} from './lib/setSelected';
-import {internalOptions2externalModel} from './lib/internalOptions2externalModel';
-import {value2trackingId} from './lib/value2trackingId';
-import {externalOptions2internalOptions} from './lib/externalOptions2internalOptions';
+import * as angular from 'angular';
+import {setSelected} from './lib/set-selected';
+import {internalOptions2externalModel} from './lib/internal-options-2-external-model';
+import {value2trackingId} from './lib/value-2-tracking-id';
+import {externalOptions2internalOptions} from './lib/external-options-2-internal-options';
 import {InternalOption} from './model/internal-option.model';
 import {OptionState} from './model/option-state.enum';
-import {w11kSelectConfigInstance} from './model/w11k-select-config.model';
-import {collectActiveLabels} from './lib/collectActiveLabels';
+import {ConfigInstance} from './model/config.model';
+import {collectActiveLabels} from './lib/collect-active-labels';
 
 
 export interface Scope extends ng.IScope {
-  config: w11kSelectConfigInstance;
+  config: ConfigInstance;
   style: any;  // only required once?
   onKeyPressedOnDropDownToggle: (event: any) => void;
   showMoreOptions: () => void;
@@ -577,7 +577,7 @@ export function w11kSelect(w11kSelectConfig, $parse, $document, w11kSelectHelper
 }
 
 
-let checkConfig = (config: w11kSelectConfigInstance, setViewValue) => {
+let checkConfig = (config: ConfigInstance, setViewValue) => {
   /**
    *  Currently there is a bug if multiple = false and required = true.
    *  Then the validator runs only once, before the config is present

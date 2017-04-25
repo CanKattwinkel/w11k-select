@@ -2,16 +2,16 @@
   "extends": "./config/tsconfig.flexible",
   "compilerOptions": {
     "target": "es5",
-    "outDir": "build",
+    "outDir": "dist",
     "rootDir": "src",
-    "moduleResolution": "classic",
-    "module": "commonjs",
+    "module": "umd",
     "declaration": true,
     "importHelpers": false,
     "inlineSourceMap": false,
     "listFiles": false,
     "traceResolution": false,
     "pretty": false,
+    "strictNullChecks": true,
     "lib": [
       "dom",
       "es5"

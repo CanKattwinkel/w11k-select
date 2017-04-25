@@ -1,11 +1,11 @@
-import {externalOption2value} from './externalOption2value';
-import {externalOption2label} from './externalOption2label';
-import {value2trackingId} from './value2trackingId';
+import {externalOption2value} from './external-option-2-value';
+import {externalOption2label} from './external-option-2-label';
+import {value2trackingId} from './value-2-tracking-id';
 import {OptionState} from '../model/option-state.enum';
-import {w11kSelectConfigInstance} from '../model/w11k-select-config.model';
+import {ConfigInstance} from '../model/config.model';
 import {InternalOption} from '../model/internal-option.model';
 
-export function externalOptions2internalOptions(externalOptions, viewValue, w11kSelectHelper, optionsExpParsed, config: w11kSelectConfigInstance): InternalOption[] {
+export function externalOptions2internalOptions(externalOptions, viewValue, w11kSelectHelper, optionsExpParsed, config: ConfigInstance): InternalOption[] {
   let viewValueIDs = {};
 
   let i = viewValue.length;

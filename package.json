@@ -14,25 +14,25 @@
   "bugs": "https://github.com/w11k/w11k-select/issues",
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "trash ./build && tsc -p tsconfig.json && npm run ng:annotate && npm run copy:sass && npm run sass:compile && npm run copy:less && npm run copy:html",
-    "sass:compile": "node-sass src/w11k-select.scss build/w11k-select.css",
-    "copy:sass": "cd src  && cp --parents -R **/*.scss ./../build/  && cp -R *.scss ./../build/ ",
-    "copy:less": "cd src  && cp --parents -R **/*.less ./../build/  && cp -R *.less ./../build/ ",
-    "copy:html": "cd src  && cp --parents -R **/*.html ./../build/  && cp -R *.html ./../build/ ",
+    "build": "trash ./dist && tsc -p tsconfig.json && npm run ng:annotate && npm run copy:sass && npm run sass:compile && npm run copy:less && npm run copy:html",
+    "sass:compile": "node-sass src/w11k-select.scss dist/w11k-select.css",
+    "copy:sass": "cd src  && cp --parents -R **/*.scss ./../dist/  && cp -R *.scss ./../dist/ ",
+    "copy:less": "cd src  && cp --parents -R **/*.less ./../dist/  && cp -R *.less ./../dist/ ",
+    "copy:html": "cd src  && cp --parents -R **/*.html ./../dist/  && cp -R *.html ./../dist/ ",
     "lint": "tslint src/**/*.ts",
     "unit": "yarn build && nyc ava",
     "check-coverage": "nyc check-coverage --lines 100 --functions 100 --branches 100",
     "test": "yarn lint && yarn unit && yarn check-coverage",
-    "watch": "trash ./build && multiview [yarn watch:build] [yarn watch:unit]",
+    "watch": "trash ./dist && multiview [yarn watch:build] [yarn watch:unit]",
     "watch:build": "tsc -p tsconfig.json -w",
     "watch:unit": "tsc -p tsconfig.json && ava --watch --verbose",
     "cov": "yarn unit && yarn html-coverage && opn coverage/index.html",
     "html-coverage": "nyc report --reporter=html",
     "send-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "docs": "typedoc src/index.ts --excludePrivate --mode file --theme minimal --out build/docs && opn build/docs/index.html",
-    "docs:json": "typedoc --mode file --json build/docs/typedoc.json src/index.ts",
+    "docs": "typedoc src/index.ts --excludePrivate --mode file --theme minimal --out dist/docs && opn dist/docs/index.html",
+    "docs:json": "typedoc --mode file --json dist/docs/typedoc.json src/index.ts",
     "release": "standard-version",
-    "ng:annotate": "find build/ -iname '*.js' -exec sh -c 'ng-annotate  -a {}  -o ./{}' \\;"
+    "ng:annotate": "find dist/ -iname '*.js' -exec sh -c 'ng-annotate  -a {}  -o ./{}' \\;"
   },
   "scripts-info": {
     "info": "Display information about the scripts",
@@ -69,11 +69,11 @@
   "engines": {
     "node": ">=4"
   },
-  "main": "./build/index.js",
-  "typings": "build/index.d.ts",
-  "module": "build/module/index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "src/**"
+    "dist/**",
+    "package.json"
   ],
   "dependencies": {
     "angular": ">= 1.2.0 < 1.7.0",

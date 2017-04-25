@@ -1,9 +1,26 @@
-export class w11kSelectConfigCommon {
+export class ConfigCommon {
   templateUrl: string = 'w11k-select.tpl.html';
   templateUrlOptions: string = 'w11k-select-option.tpl.html';
 }
+export interface StyleConfig {
+  marginBottom: '10px';
+  maxHeight: undefined | string;
+}
 
-export class w11kSelectConfigInstance {
+export interface FilterConfig {
+  active: boolean;
+  placeholder: string;
+  select: {
+    active: boolean;
+    text: undefined | string;
+  }
+  deselect: {
+    active: true,
+    text: undefined | string;
+  }
+}
+
+export class ConfigInstance {
   /** for form validation */
   required: boolean = false;
   /** Hide checkboxes during single selection */
@@ -24,12 +41,15 @@ export class w11kSelectConfigInstance {
      */
     text: undefined
   };
-  dropdown = {
+  dropdown: {
+    onOpen: (() => void) | undefined,
+    onClose: (() => void) | undefined
+  } = {
     onOpen: undefined,
     onClose: undefined
   };
   /** all the configuration for the filter section within the dropdown */
-  filter = {
+  filter: FilterConfig = {
     /** activate filter input to search for options */
     active: true,
     /** text to show if no filter is applied */
@@ -57,7 +77,7 @@ export class w11kSelectConfigInstance {
   };
 
   /** values for dynamically calculated styling of dropdown */
-  style = {
+  style: StyleConfig = {
     /** margin-bottom for automatic height adjust */
     marginBottom: '10px',
     /** static or manually calculated max height (disables internal height calculation) */
@@ -69,13 +89,13 @@ export class w11kSelectConfigInstance {
 
 }
 
-export class w11kSelectConfig {
-  common: w11kSelectConfigCommon;
-  instance: w11kSelectConfigInstance;
+export class Config {
+  common: ConfigCommon;
+  instance: ConfigInstance;
 
 
-  constructor(common?: w11kSelectConfigCommon, instance?: w11kSelectConfigInstance) {
-    this.common = common || new w11kSelectConfigCommon();
-    this.instance = instance || new w11kSelectConfigInstance();
+  constructor(common?: ConfigCommon, instance?: ConfigInstance) {
+    this.common = common || new ConfigCommon();
+    this.instance = instance || new ConfigInstance();
   }
 }

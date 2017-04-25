@@ -1,18 +1,25 @@
 /** @internal */
-import {ng as angular} from './lib/angular';
+import * as angular from 'angular';
+import {IDocumentService, IParseService} from 'angular';
 
-export function w11kSelectHelper($parse, $document) {
-  'ngInject';
+export class W11KSelectHelper {
 
-  //                   value                 as    label                for       item              in    collection                    |  filter                        track by     tracking
-  const OPTIONS_EXP = /^([a-zA-Z][\w\.]*)(?:\s+as\s+([a-zA-Z][\w\.]*))?\s+for\s+(?:([a-zA-Z][\w]*))\s+in\s+([$_a-zA-Z][\w\.\(\)]*(?:\s+\|\s[a-zA-Z][\w\:_\{\}']*)*)(?:\s+track\sby\s+([a-zA-Z][\w\.]*))?$/;
+  //               value                 as    label                for       item              in    collection                    |  filter                        track by     tracking
+  OPTIONS_EXP = /^([a-zA-Z][\w\.]*)(?:\s+as\s+([a-zA-Z][\w\.]*))?\s+for\s+(?:([a-zA-Z][\w]*))\s+in\s+([$_a-zA-Z][\w\.\(\)]*(?:\s+\|\s[a-zA-Z][\w\:_\{\}']*)*)(?:\s+track\sby\s+([a-zA-Z][\w\.]*))?$/;
 
-  function extendDeep(dst, ...otherArgs) {
+
+  constructor(public readonly $parse: IParseService,
+              public readonly $document: IDocumentService) {
+    'ngInject';
+
+  }
+
+  extendDeep(dst, ...otherArgs) {
     angular.forEach(otherArgs, function (obj) {
       if (obj !== dst) {
         angular.forEach(obj, function (value, key) {
           if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
-            extendDeep(dst[key], value);
+            this.extendDeep(dst[key], value);
           } else {
             dst[key] = value;
           }
@@ -22,7 +29,7 @@ export function w11kSelectHelper($parse, $document) {
     return dst;
   }
 
-  function hashCode(value) {
+  hashCode(value) {
     let string;
     if (typeof value === 'object') {
       string = angular.toJson(value);
@@ -40,29 +47,29 @@ export function w11kSelectHelper($parse, $document) {
     return hash.toString(36);
   }
 
-  function parseOptions(input) {
+  parseOptions(input) {
 
-    let match = input.match(OPTIONS_EXP);
+    let match = input.match(this.OPTIONS_EXP);
     if (!match) {
       let expected = '"item.value" [as "item.label"] for "item" in "collection [ | filter ] [track by item.value.unique]"';
       throw new Error('Expected options in form of \'' + expected + '\' but got "' + input + '".');
     }
 
     let result: any = {
-      value: $parse(match[1]),
-      label: $parse(match[2] || match[1]),
+      value: this.$parse(match[1]),
+      label: this.$parse(match[2] || match[1]),
       item: match[3],
-      collection: $parse(match[4])
+      collection: this.$parse(match[4])
     };
 
     if (match[5] !== undefined) {
-      result.tracking = $parse(match[5]);
+      result.tracking = this.$parse(match[5]);
     }
 
     return result;
   }
 
-  function getParent(element, selector) {
+  getParent(element, selector) {
     // with jQuery
     if (angular.isFunction(element.parents)) {
       let container = element.parents(selector);
@@ -88,7 +95,7 @@ export function w11kSelectHelper($parse, $document) {
       let matchFunction = matchFunctions[index];
       if (angular.isFunction(element[0][matchFunction])) {
         let parent1 = element[0].parentNode;
-        while (parent1 !== $document[0]) {
+        while (parent1 !== this.$document[0]) {
           if (parent1[matchFunction](selector)) {
             return parent1;
           }
@@ -101,12 +108,4 @@ export function w11kSelectHelper($parse, $document) {
 
     return;
   }
-
-
-  return {
-    parseOptions: parseOptions,
-    hashCode: hashCode,
-    extendDeep: extendDeep,
-    getParent: getParent
-  };
 }

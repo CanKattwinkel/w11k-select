@@ -1,9 +1,9 @@
-import {internalOption2value} from './internalOption2value';
-import {w11kSelectConfig} from '../model/w11k-select-config.model';
+import {internalOption2value} from './internal-option-2-value';
+import {Config} from '../model/config.model';
 import {InternalOption} from '../model/internal-option.model';
 import {OptionState} from '../model/option-state.enum';
 
-export function internalOptions2externalModel(options, optionsExpParsed, config: w11kSelectConfig) {
+export function internalOptions2externalModel(options, optionsExpParsed, config: Config) {
   let arr = [];
   options.forEach(option => traverse(option, arr, optionsExpParsed));
   return arr;
