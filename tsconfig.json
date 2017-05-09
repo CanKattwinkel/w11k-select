@@ -1,10 +1,7 @@
 {
   "extends": "./config/tsconfig.flexible",
   "compilerOptions": {
-    "target": "es5",
-    "outDir": "dist",
     "rootDir": "src",
-    "module": "umd",
     "declaration": true,
     "importHelpers": false,
     "inlineSourceMap": false,
@@ -12,16 +9,25 @@
     "traceResolution": false,
     "pretty": false,
     "strictNullChecks": true,
-    "lib": [
-      "dom",
-      "es5"
-    ],
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "outDir": "lib",
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "skipLibCheck": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules/**"
