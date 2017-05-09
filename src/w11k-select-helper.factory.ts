@@ -14,10 +14,10 @@ export class W11KSelectHelper {
 
   }
 
-  extendDeep(dst, ...otherArgs) {
-    angular.forEach(otherArgs, function (obj) {
+  extendDeep = (dst, ...otherArgs) => {
+    angular.forEach(otherArgs, (obj) => {
       if (obj !== dst) {
-        angular.forEach(obj, function (value, key) {
+        angular.forEach(obj, (value, key) => {
           if (dst[key] && dst[key].constructor && dst[key].constructor === Object) {
             this.extendDeep(dst[key], value);
           } else {
@@ -27,7 +27,7 @@ export class W11KSelectHelper {
       }
     });
     return dst;
-  }
+  };
 
   hashCode(value) {
     let string;
