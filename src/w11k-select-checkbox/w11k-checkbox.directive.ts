@@ -18,7 +18,7 @@ export function w11kSelectCheckboxDirective(): ng.IDirective {
     },
     bindToController: true,
     controllerAs: '$ctrl',
-    template: `<a class="w11k-checkbox" ng-click="toggle()" ng-class="$ctrl.getClass(state)"></a>`,
+    template: `<a class="w11k-checkbox" ng-class="$ctrl.getClass($ctrl.state)"></a>`,
     restrict: 'E',
     controller: W11KSelectCheckbox
   }
